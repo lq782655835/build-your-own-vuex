@@ -9,8 +9,8 @@ let store = new Vuex.Store({
       count: 0
   },
   actions: {
-      countPlusSix(context) {
-          context.commit('plusSix');
+      countPlusSix({commit}) {
+          commit('plusSix');
       }
   },
   mutations: {

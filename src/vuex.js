@@ -1,7 +1,3 @@
-let Vue = null
-const forEach = (obj, callback) => Object.keys(obj).forEach(key => callback(key, obj[key]))
-
-
 // example store
 // let store = new Vuex.Store({
 //     state: {
@@ -23,6 +19,10 @@ const forEach = (obj, callback) => Object.keys(obj).forEach(key => callback(key,
 //         }
 //     }
 //   });
+
+let Vue = null
+const forEach = (obj, callback) => Object.keys(obj).forEach(key => callback(key, obj[key]))
+
 class Store {
     constructor(options) {
         const { state = {}, getters = {}, mutations = {}, actions = {} } = options
@@ -56,11 +56,12 @@ class Store {
         return this._vm.state
     }
 
-    commit(type, payload) {
+    // 箭头函数确定this指向当前$store
+    // 如果这俩方法定义在原型链上，解构时方法里的this指向window，报错
+    commit = (type, payload) => {
         this.mutations[type](payload)
     }
-
-    dispatch(type, payload) {
+    dispatch = (type, payload) => {
         this.actions[type](payload)
     }
 }
